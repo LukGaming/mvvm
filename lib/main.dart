@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/ui/todo/viewmodels/todo_viewmodel.dart';
+import 'package:mvvm/ui/todo/widgets/todo_screen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,17 +14,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: false,
       ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
+      home: TodoScreen(
+        todoViewmodel: TodoViewmodel(),
+      ),
     );
   }
 }
