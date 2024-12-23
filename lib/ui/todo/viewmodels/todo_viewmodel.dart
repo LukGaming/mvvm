@@ -43,6 +43,7 @@ class TodoViewmodel extends ChangeNotifier {
   Future<Result<String>> _deleteTodo(Todo todo) async {
     await Future.delayed(const Duration(seconds: 1));
     _todos.remove(todo);
+    notifyListeners();
     return Result.ok("Removido com sucesso.");
   }
 }
