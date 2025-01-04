@@ -41,9 +41,9 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
         },
       );
     } else {
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
       if (widget.todoViewmodel.addTodo.completed) {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.green,
@@ -54,8 +54,6 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
         );
       }
       if (widget.todoViewmodel.addTodo.error) {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.red,

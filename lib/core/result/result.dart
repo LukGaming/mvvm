@@ -1,4 +1,4 @@
-abstract class Result<T extends Object> {
+abstract class Result<T> {
   const Result();
 
   factory Result.ok(T value) = Ok._;
@@ -6,12 +6,12 @@ abstract class Result<T extends Object> {
   factory Result.error(Exception error) = ResultError._;
 }
 
-final class Ok<T extends Object> extends Result<T> {
+final class Ok<T> extends Result<T> {
   Ok._(this.value);
   final T value;
 }
 
-final class ResultError<T extends Object> extends Result<T> {
+final class ResultError<T> extends Result<T> {
   ResultError._(this.error);
 
   Exception error;
@@ -29,7 +29,7 @@ extension ResultException on Exception {
   }
 }
 
-extension ResultCasting<T extends Object> on Result<T> {
+extension ResultCasting<T> on Result<T> {
   Ok<T> get asOk => this as Ok<T>;
 
   ResultError<T> get asError => this as ResultError<T>;
