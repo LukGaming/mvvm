@@ -91,7 +91,7 @@ void main() {
 
       expect(command1.completed, false);
 
-      expect(command1.result, isA<ResultError>());
+      expect(command1.result, isA<Error>());
     });
   });
 }

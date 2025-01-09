@@ -21,8 +21,7 @@ abstract class Command<Output> extends ChangeNotifier {
   bool get completed =>
       _result is Ok; // Verifica se o nosso estado foi gerado com sucesso
 
-  bool get error =>
-      _result is ResultError; //Verifica se o nosso estado é de erro
+  bool get error => _result is Error; //Verifica se o nosso estado é de erro
 
   Future<void> _execute(CommandAction0<Output> action) async {
     //Impede com que a action seja reexecutada mais de uma vez simutaneamente
