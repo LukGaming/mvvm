@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/core/result/result.dart';
+import 'package:mvvm/utils/result/result.dart';
 
 //Command 0 não possui parametros de entrada
 typedef CommandAction0<Output> = Future<Result<Output>> Function();

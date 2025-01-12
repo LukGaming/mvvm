@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm/core/typedefs/todos.dart';
+import 'package:mvvm/utils/typedefs/todos.dart';
 import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/ui/todo/viewmodels/todo_viewmodel.dart';
 import 'package:mvvm/ui/todo/widgets/todo_tile.dart';

@@ -1,4 +1,4 @@
-import 'package:mvvm/core/result/result.dart';
+import 'package:mvvm/utils/result/result.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/domain/models/todo.dart';
 
