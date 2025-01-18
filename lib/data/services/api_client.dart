@@ -26,8 +26,8 @@ class ApiClient {
 
       if (response.statusCode == 200) {
         final stringData = await response.transform(utf8.decoder).join();
-        final json = jsonDecode(stringData) as List<Map<String, dynamic>>;
-        final List<Todo> todos = json.map(Todo.fromJson).toList();
+        final json = jsonDecode(stringData) as List<dynamic>;
+        final List<Todo> todos = json.map((e) => Todo.fromJson(e)).toList();
         return Result.ok(todos);
       } else {
         return Result.error(const HttpException("Invalid response"));

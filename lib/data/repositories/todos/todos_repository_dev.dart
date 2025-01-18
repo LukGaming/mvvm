@@ -10,7 +10,7 @@ class TodosRepositoryDev implements TodosRepository {
     final lastTodoIndex = _todos.length;
 
     final Todo createdTodo = Todo(
-      id: lastTodoIndex + 1,
+      id: (lastTodoIndex + 1).toString(),
       name: name,
     );
 
