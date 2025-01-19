@@ -1,9 +1,9 @@
 class Todo {
-  final String id;
+  final String? id;
   final String name;
 
   Todo({
-    required this.id,
+    this.id,
     required this.name,
   });
 
