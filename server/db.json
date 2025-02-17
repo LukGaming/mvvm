@@ -1,34 +1,14 @@
 {
   "todos": [
     {
-      "id": "2915",
-      "name": "Segundo todo criado pelo postman"
+      "id": "9b9c",
+      "name": "teste",
+      "runtimeType": "create"
     },
     {
-      "id": "386e",
-      "name": "Todo created on TEST"
-    },
-    {
-      "id": "c2c9",
-      "name": "Todo created on TEST"
-    },
-    {
-      "id": "24be",
-      "name": "Todo created on TEST"
-    },
-    {
-      "id": "0fa9",
-      "name": "Todo created on TEST"
-    },
-    {
-      "id": "9e6d",
-      "name": "Todo created on TEST",
-      "runtimeType": "update"
-    },
-    {
-      "id": "d214",
-      "name": "Todo created on TEST updatedDate 2025-02-11T07:10:20.278622",
-      "runtimeType": "update"
+      "id": "1684",
+      "name": "123",
+      "runtimeType": "create"
     }
   ]
 }
