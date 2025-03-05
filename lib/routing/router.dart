@@ -4,6 +4,7 @@ import 'package:mvvm/data/services/api/api_client.dart';
 import 'package:mvvm/routing/routes.dart';
 import 'package:mvvm/ui/todo/viewmodels/todo_viewmodel.dart';
 import 'package:mvvm/ui/todo/widgets/todo_screen.dart';
+import 'package:mvvm/ui/todo_details/widgets/todo_details_screen.dart';
 
 GoRouter routerConfig() {
   return GoRouter(
@@ -22,6 +23,15 @@ GoRouter routerConfig() {
             ),
           );
         },
+        routes: [
+          GoRoute(
+            path: ":id",
+            builder: (context, state) {
+              final todoId = state.pathParameters["id"]!;
+              return TodoDetailsScreen(id: todoId);
+            },
+          ),
+        ],
       ),
     ],
   );
