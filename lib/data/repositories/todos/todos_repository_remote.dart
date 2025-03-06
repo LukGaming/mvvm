@@ -59,4 +59,19 @@ class TodosRepositoryRemote implements TodosRepository {
       return Result.error(error);
     }
   }
+
+  @override
+  Future<Result<Todo>> getById(String id) async {
+    try {
+      final result = await _apiClient.getTodoById(id);
+      switch (result) {
+        case Ok<Todo>():
+          return Result.ok(result.value);
+        default:
+          return result;
+      }
+    } on Exception catch (error) {
+      return Result.error(error);
+    }
+  }
 }
