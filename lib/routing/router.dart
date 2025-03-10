@@ -38,7 +38,6 @@ GoRouter routerConfig() {
               todoDetailsViewModel.load.execute(todoId);
 
               return TodoDetailsScreen(
-                id: todoId,
                 todoDetailsViewModel: todoDetailsViewModel,
               );
             },

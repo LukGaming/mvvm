@@ -1,93 +1,33 @@
 {
   "todos": [
     {
-      "id": "9b9c",
-      "name": "teste",
+      "id": "fb0d",
+      "name": "Tomar cafe",
       "runtimeType": "create"
     },
     {
-      "id": "1684",
-      "name": "123",
+      "id": "57af",
+      "name": "Preparar video",
       "runtimeType": "create"
     },
     {
-      "id": "374b",
-      "name": "Todo created on TEST",
+      "id": "fda0",
+      "name": "Ir para academia",
       "runtimeType": "create"
     },
     {
-      "id": "363a",
-      "name": "Todo created on TEST",
+      "id": "c723",
+      "name": "tomar cafe da manha",
       "runtimeType": "create"
     },
     {
-      "id": "80b5",
-      "name": "Todo created on TEST",
+      "id": "6e91",
+      "name": "Colocar roupas para lavar",
       "runtimeType": "create"
     },
     {
-      "id": "c147",
-      "name": "Todo created on TEST",
-      "runtimeType": "create"
-    },
-    {
-      "id": "64f8",
-      "name": "Todo created on TEST",
-      "runtimeType": "create"
-    },
-    {
-      "id": "b164",
-      "name": "Todo created on TEST",
-      "runtimeType": "create"
-    },
-    {
-      "id": "ad5c",
-      "name": "Todo created on TEST",
-      "runtimeType": "create"
-    },
-    {
-      "id": "fb85",
-      "name": "Todo created on TEST updatedDate 2025-03-06T18:40:08.046514",
-      "runtimeType": "update"
-    },
-    {
-      "id": "eb58",
-      "name": "Todo created on TEST 2025-03-06 18:40:13.879799",
-      "runtimeType": "create"
-    },
-    {
-      "id": "de6a",
-      "name": "Todo created on TEST 2025-03-06 18:40:22.563193",
-      "runtimeType": "create"
-    },
-    {
-      "id": "5efa",
-      "name": "Todo created on TEST 2025-03-06 18:40:59.483468",
-      "runtimeType": "create"
-    },
-    {
-      "id": "e772",
-      "name": "Todo created on TEST 2025-03-06 18:41:17.588719",
-      "runtimeType": "create"
-    },
-    {
-      "id": "379e",
-      "name": "Todo created on TEST 2025-03-06 18:43:02.422542",
-      "runtimeType": "create"
-    },
-    {
-      "id": "8a9e",
-      "name": "Todo created on TEST 2025-03-06 18:45:41.418039",
-      "runtimeType": "create"
-    },
-    {
-      "id": "4013",
-      "name": "Todo created on TEST 2025-03-06 18:46:11.667051",
-      "runtimeType": "create"
-    },
-    {
-      "id": "1ab2",
-      "name": "Todo created on TEST 2025-03-06 18:46:46.045258",
+      "id": "688c",
+      "name": "Esticar roupas",
       "runtimeType": "create"
     }
   ]
