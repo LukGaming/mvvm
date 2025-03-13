@@ -17,7 +17,7 @@ class TodoViewmodel extends ChangeNotifier {
 
   late Commmand0 load;
 
-  late Command1<Todo, String> addTodo;
+  late Command1<Todo, (String, String, bool)> addTodo;
 
   late Command1<void, Todo> deleteTodo;
 
@@ -41,8 +41,14 @@ class TodoViewmodel extends ChangeNotifier {
     return result;
   }
 
-  Future<Result<Todo>> _addTodo(String name) async {
-    final result = await _todosRepository.add(name);
+  Future<Result<Todo>> _addTodo((String, String, bool) todo) async {
+    final (name, description, done) = todo;
+
+    final result = await _todosRepository.add(
+      name: name,
+      description: description,
+      done: done,
+    );
 
     switch (result) {
       case Ok<Todo>():

@@ -12,7 +12,11 @@ class TodosRepositoryRemote implements TodosRepository {
   }) : _apiClient = apiClient;
 
   @override
-  Future<Result<Todo>> add(String name) async {
+  Future<Result<Todo>> add({
+    required String name,
+    required String description,
+    required bool done,
+  }) async {
     try {
       final result = await _apiClient.postTodo(
         CreateTodoApiModel(name: name),
