@@ -1,34 +1,11 @@
 {
   "todos": [
     {
-      "id": "fb0d",
-      "name": "Tomar cafe",
-      "runtimeType": "create"
-    },
-    {
-      "id": "57af",
-      "name": "Preparar video",
-      "runtimeType": "create"
-    },
-    {
-      "id": "fda0",
-      "name": "Ir para academia",
-      "runtimeType": "create"
-    },
-    {
-      "id": "c723",
-      "name": "tomar cafe da manha",
-      "runtimeType": "create"
-    },
-    {
-      "id": "6e91",
-      "name": "Colocar roupas para lavar",
-      "runtimeType": "create"
-    },
-    {
-      "id": "688c",
-      "name": "Esticar roupas",
-      "runtimeType": "create"
+      "id": "4427",
+      "name": "asdasd",
+      "description": "",
+      "done": true,
+      "runtimeType": "update"
     }
   ]
 }
