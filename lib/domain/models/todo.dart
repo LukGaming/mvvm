@@ -28,4 +28,18 @@ class Todo {
       'done': done,
     };
   }
+
+  Todo copyWith({
+    String? id,
+    String? name,
+    String? description,
+    bool? done,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      done: done ?? this.done,
+    );
+  }
 }

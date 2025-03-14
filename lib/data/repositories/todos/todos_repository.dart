@@ -13,4 +13,6 @@ abstract class TodosRepository {
   Future<Result<void>> delete(Todo todo);
 
   Future<Result<Todo>> getById(String id);
+
+  Future<Result<Todo>> updateTodo(Todo todo);
 }

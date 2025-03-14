@@ -10,7 +10,7 @@ import 'package:mvvm/ui/todo_details/widgets/todo_details_screen.dart';
 GoRouter routerConfig() {
   final todosRepository = TodosRepositoryRemote(
     apiClient: ApiClient(
-      host: "192.168.1.102",
+      host: "192.168.1.106",
     ),
   );
   return GoRouter(

@@ -19,7 +19,11 @@ class TodosRepositoryRemote implements TodosRepository {
   }) async {
     try {
       final result = await _apiClient.postTodo(
-        CreateTodoApiModel(name: name),
+        CreateTodoApiModel(
+          name: name,
+          description: description,
+          done: done,
+        ),
       );
 
       switch (result) {
@@ -68,6 +72,29 @@ class TodosRepositoryRemote implements TodosRepository {
   Future<Result<Todo>> getById(String id) async {
     try {
       final result = await _apiClient.getTodoById(id);
+      switch (result) {
+        case Ok<Todo>():
+          return Result.ok(result.value);
+        default:
+          return result;
+      }
+    } on Exception catch (error) {
+      return Result.error(error);
+    }
+  }
+
+  @override
+  Future<Result<Todo>> updateTodo(Todo todo) async {
+    try {
+      final result = await _apiClient.updateTodo(
+        UpdateTodoApiModel(
+          id: todo.id,
+          name: todo.name,
+          description: todo.description,
+          done: todo.done,
+        ),
+      );
+
       switch (result) {
         case Ok<Todo>():
           return Result.ok(result.value);

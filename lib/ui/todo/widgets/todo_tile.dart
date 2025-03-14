@@ -22,7 +22,12 @@ class TodoTile extends StatelessWidget {
       onTap: () => context.push(Routes.todoDetails(todo.id)),
       child: Card(
         child: ListTile(
-          leading: Text(todo.id),
+          leading: Checkbox(
+            value: todo.done,
+            onChanged: (value) {
+              todoViewmodel.updateTodo.execute(todo.copyWith(done: value));
+            },
+          ),
           title: Text(todo.name),
           trailing: IconButton(
             onPressed: () {

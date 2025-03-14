@@ -75,7 +75,7 @@ class ApiClient {
 
       final response = await request.close();
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final stringData = await response.transform(utf8.decoder).join();
         final json = jsonDecode(stringData) as Map<String, dynamic>;
         final createdTodo = Todo.fromJson(json);
