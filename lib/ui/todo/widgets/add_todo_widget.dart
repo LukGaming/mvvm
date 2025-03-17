@@ -15,6 +15,9 @@ class AddTodoWidget extends StatefulWidget {
 class _AddTodoWidgetState extends State<AddTodoWidget> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController nameController = TextEditingController();
+  late final TextEditingController descriptionController =
+      TextEditingController();
+
   final vertigalGap = const SizedBox(
     height: 16,
   );
@@ -67,6 +70,7 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
   @override
   void dispose() {
     nameController.dispose();
+    descriptionController.dispose();
     widget.todoViewmodel.addTodo.removeListener(_onResult);
     super.dispose();
   }
@@ -75,39 +79,55 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: IntrinsicHeight(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const Row(
-                children: [Text("Adicione novos todos")],
-              ),
-              vertigalGap,
-              TextFormField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: "Nome ",
-                  border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const Row(
+                  children: [Text("Adicione novos todos")],
                 ),
-                validator: (value) {
-                  if (value == null || value.trim() == "") {
-                    return "Por favor preencha o campo de nome";
-                  }
-                  return null;
-                },
-              ),
-              vertigalGap,
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() == true) {
-                    widget.todoViewmodel.addTodo.execute(
-                      (nameController.text, "", false),
-                    );
-                  }
-                },
-                child: const Text("Salvar"),
-              )
-            ],
+                vertigalGap,
+                TextFormField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    hintText: "Nome ",
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim() == "") {
+                      return "Por favor preencha o campo de nome";
+                    }
+                    return null;
+                  },
+                ),
+                vertigalGap,
+                TextFormField(
+                  minLines: 3,
+                  maxLines: null,
+                  controller: descriptionController,
+                  decoration: const InputDecoration(
+                    hintText: "Descrição ",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                vertigalGap,
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() == true) {
+                      widget.todoViewmodel.addTodo.execute(
+                        (
+                          nameController.text,
+                          descriptionController.text,
+                          false
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text("Salvar"),
+                )
+              ],
+            ),
           ),
         ),
       ),
