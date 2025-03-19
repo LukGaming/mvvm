@@ -36,23 +36,9 @@
       "runtimeType": "update"
     },
     {
-      "id": "2b26",
-      "name": "Comprar carne",
-      "description": "Ir ao supermercado mais proximo e comprar dois kgs de carne",
-      "done": false,
-      "runtimeType": "create"
-    },
-    {
       "id": "1aca",
       "name": "Tomar banho",
       "description": "ALSKDLASDKASLDKASLDKASDLKASLDKASDLKASDLKASDLKASDLAKSDLAKSDALSDKALDKADLKASDL",
-      "done": false,
-      "runtimeType": "create"
-    },
-    {
-      "id": "634b",
-      "name": "exercicios Fonoterapia",
-      "description": "Sapao com vibracao de lingua 2 minutos\n\nLaxvox com nota continua 2 minutos\n\nRespiron 75% 5 minutos",
       "done": false,
       "runtimeType": "create"
     }
