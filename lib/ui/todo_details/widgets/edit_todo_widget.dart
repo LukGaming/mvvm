@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm/domain/models/todo.dart';
+import 'package:mvvm/ui/todo_details/viewmodels/todo_details_viewmodel.dart';
 
 class EditTodoWidget extends StatefulWidget {
   final Todo todo;
+  final TodoDetailsViewModel todoDetailsViewModel;
   const EditTodoWidget({
     super.key,
     required this.todo,
+    required this.todoDetailsViewModel,
   });
 
   @override
