@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_remote.dart';
 import 'package:mvvm/data/services/api/api_client.dart';
+import 'package:mvvm/domain/use_cases/todo_update_use_case.dart';
 import 'package:mvvm/routing/routes.dart';
 import 'package:mvvm/ui/todo/viewmodels/todo_viewmodel.dart';
 import 'package:mvvm/ui/todo/widgets/todo_screen.dart';
@@ -13,6 +14,9 @@ GoRouter routerConfig() {
       host: "192.168.1.106",
     ),
   );
+
+  final todoUpdateCase = TodoUpdateUseCase(todosRepository: todosRepository);
+
   return GoRouter(
     initialLocation: Routes.todos,
     routes: [
@@ -22,6 +26,7 @@ GoRouter routerConfig() {
           return TodoScreen(
             todoViewmodel: TodoViewmodel(
               todosRepository: todosRepository,
+              todoUpdateUseCase: todoUpdateCase,
             ),
           );
         },
@@ -33,6 +38,7 @@ GoRouter routerConfig() {
               final TodoDetailsViewModel todoDetailsViewModel =
                   TodoDetailsViewModel(
                 todosRepository: todosRepository,
+                todoUpdateUseCase: todoUpdateCase,
               );
 
               todoDetailsViewModel.load.execute(todoId);

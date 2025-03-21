@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm/domain/use_cases/todo_update_use_case.dart';
 import 'package:mvvm/utils/commands/commands.dart';
 import 'package:mvvm/utils/result/result.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
@@ -7,14 +8,18 @@ import 'package:mvvm/domain/models/todo.dart';
 class TodoViewmodel extends ChangeNotifier {
   TodoViewmodel({
     required TodosRepository todosRepository,
-  }) : _todosRepository = todosRepository {
+    required TodoUpdateUseCase todoUpdateUseCase,
+  })  : _todosRepository = todosRepository,
+        _todoUpdateUseCase = todoUpdateUseCase {
     load = Commmand0(_load)..execute();
     addTodo = Command1(_addTodo);
     deleteTodo = Command1(_deleteTodo);
-    updateTodo = Command1(_updateTodo);
+    updateTodo = Command1((todo) => _todoUpdateUseCase.updateTodo(todo));
   }
 
   final TodosRepository _todosRepository;
+
+  final TodoUpdateUseCase _todoUpdateUseCase;
 
   late Commmand0 load;
 
@@ -79,19 +84,5 @@ class TodoViewmodel extends ChangeNotifier {
       default:
     }
     return result;
-  }
-
-  Future<Result<Todo>> _updateTodo(Todo todo) async {
-    final result = await _todosRepository.updateTodo(todo);
-
-    switch (result) {
-      case Ok<Todo>():
-        final todoIndex = _todos.indexWhere((e) => e.id == todo.id);
-        _todos[todoIndex] = result.value;
-        notifyListeners();
-        return Result.ok(result.value);
-      default:
-        return result;
-    }
   }
 }
