@@ -30,6 +30,12 @@ class _EditTodoWidgetState extends State<EditTodoWidget> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    widget.todoDetailsViewModel.updateTodo.addListener(_onUpdateTodo);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Form(
@@ -64,7 +70,14 @@ class _EditTodoWidgetState extends State<EditTodoWidget> {
             _verticalGap,
             ElevatedButton(
               onPressed: () {
-                if (_formKey.currentState?.validate() == true) {}
+                if (_formKey.currentState?.validate() == true) {
+                  widget.todoDetailsViewModel.updateTodo.execute(
+                    widget.todo.copyWith(
+                      name: _nameController.text,
+                      description: _descriptionController.text,
+                    ),
+                  );
+                }
               },
               child: const Text("Salvar"),
             ),
@@ -78,6 +91,44 @@ class _EditTodoWidgetState extends State<EditTodoWidget> {
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
+    widget.todoDetailsViewModel.updateTodo.removeListener(_onUpdateTodo);
     super.dispose();
+  }
+
+  void _onUpdateTodo() {
+    final command = widget.todoDetailsViewModel.updateTodo;
+    if (command.running) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return const AlertDialog(
+            content: IntrinsicHeight(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      Navigator.of(context).pop();
+      if (command.completed) {
+        Navigator.of(context).pop();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.green,
+            content: Text("Todo editado com sucesso!"),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text("Ocorreu um erro ao editar Todo!"),
+          ),
+        );
+      }
+    }
   }
 }
