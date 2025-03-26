@@ -1,15 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/services/api/api_client.dart';
 import 'package:mvvm/data/services/api/models/todo/todo_api_model.dart';
 import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/utils/result/result.dart';
 
-class TodosRepositoryRemote implements TodosRepository {
+class TodosRepositoryRemote extends ChangeNotifier implements TodosRepository {
   final ApiClient _apiClient;
 
-  const TodosRepositoryRemote({
+  TodosRepositoryRemote({
     required ApiClient apiClient,
   }) : _apiClient = apiClient;
+
+  @override
+  List<Todo> get todos => _todos;
+
+  List<Todo> _todos = [];
 
   @override
   Future<Result<Todo>> add({
@@ -34,6 +40,8 @@ class TodosRepositoryRemote implements TodosRepository {
       }
     } on Exception catch (error) {
       return Result.error(error);
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -49,6 +57,8 @@ class TodosRepositoryRemote implements TodosRepository {
       }
     } on Exception catch (error) {
       return Result.error(error);
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -59,12 +69,15 @@ class TodosRepositoryRemote implements TodosRepository {
 
       switch (result) {
         case Ok<List<Todo>>():
+          _todos = result.value;
           return Result.ok(result.value);
         default:
           return result;
       }
     } on Exception catch (error) {
       return Result.error(error);
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -97,12 +110,16 @@ class TodosRepositoryRemote implements TodosRepository {
 
       switch (result) {
         case Ok<Todo>():
+          final todoIndex = _todos.indexWhere((e) => e.id == todo.id);
+          _todos[todoIndex] = result.value;
           return Result.ok(result.value);
         default:
           return result;
       }
     } on Exception catch (error) {
       return Result.error(error);
+    } finally {
+      notifyListeners();
     }
   }
 }

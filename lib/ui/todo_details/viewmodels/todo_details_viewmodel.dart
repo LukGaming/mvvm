@@ -16,6 +16,9 @@ class TodoDetailsViewModel extends ChangeNotifier {
         _todoUpdateUseCase = todoUpdateUseCase {
     load = Command1(_load);
     updateTodo = Command1(_todoUpdateUseCase.updateTodo);
+    _todosRepository.addListener(() {
+      load.execute(_todo.id);
+    });
   }
 
   late final Command1<Todo, String> load;
