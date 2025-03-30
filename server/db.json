@@ -1,18 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "753f",
-      "name": "preparar video",
-      "description": "Video sobre cacheamento\n",
-      "done": false,
-      "runtimeType": "create"
-    },
-    {
-      "id": "9af7",
-      "name": "asdasdasd",
-      "description": "asdasdasdasdasdasdasdasdasdasd",
-      "done": false,
-      "runtimeType": "update"
-    }
-  ]
+  "todos": []
 }
