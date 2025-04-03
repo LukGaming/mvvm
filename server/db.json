@@ -1,9 +1,16 @@
 {
   "todos": [
     {
-      "id": "2269",
-      "name": "asdasdsad",
-      "description": "asdasdasdasd",
+      "id": "7ab0",
+      "name": "Novo todo",
+      "description": "asdasd",
+      "done": true,
+      "runtimeType": "update"
+    },
+    {
+      "id": "6dd0",
+      "name": "asdasd",
+      "description": "asdasd",
       "done": false,
       "runtimeType": "create"
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:mvvm/domain/use_cases/todo_update_use_case.dart';
 import 'package:mvvm/utils/commands/commands.dart';
 import 'package:mvvm/utils/result/result.dart';
@@ -37,56 +38,80 @@ class TodoViewmodel extends ChangeNotifier {
 
   List<Todo> get todos => _todos;
 
+  final _log = Logger("TodoViewModel");
+
   Future<Result> _load() async {
-    final result = await _todosRepository.get();
+    try {
+      final result = await _todosRepository.get();
 
-    switch (result) {
-      case Ok<List<Todo>>():
-        _todos = result.value;
-        notifyListeners();
-        break;
-      case Error():
-        //TODO: implement LOGGING
-        break;
+      switch (result) {
+        case Ok<List<Todo>>():
+          _todos = result.value;
+
+          _log.fine("Todos carregados");
+          break;
+        case Error():
+          _log.warning("Falha ao carregar todos", result.error);
+          break;
+      }
+
+      return result;
+    } on Exception catch (error, stackStack) {
+      _log.warning("Falha ao carregar todos", error, stackStack);
+      return Result.error(error);
+    } finally {
+      notifyListeners();
     }
-
-    return result;
   }
 
   Future<Result<Todo>> _addTodo((String, String, bool) todo) async {
     final (name, description, done) = todo;
 
-    final result = await _todosRepository.add(
-      name: name,
-      description: description,
-      done: done,
-    );
+    try {
+      final result = await _todosRepository.add(
+        name: name,
+        description: description,
+        done: done,
+      );
 
-    switch (result) {
-      case Ok<Todo>():
-        _todos.add(result.value);
-        notifyListeners();
-        break;
-      case Error():
-      //TODO: implement LOGGING
-      default:
+      switch (result) {
+        case Ok<Todo>():
+          _todos.add(result.value);
+          _log.fine("Todo criado");
+          break;
+        case Error():
+          _log.warning("Erro ao criar todo");
+        default:
+      }
+
+      return result;
+    } on Exception catch (error, stackStack) {
+      _log.warning("Erro ao criar todo", error, stackStack);
+      return Result.error(error);
+    } finally {
+      notifyListeners();
     }
-
-    return result;
   }
 
   Future<Result<void>> _deleteTodo(Todo todo) async {
-    final result = await _todosRepository.delete(todo);
+    try {
+      final result = await _todosRepository.delete(todo);
 
-    switch (result) {
-      case Ok<void>():
-        _todos.remove(todo);
-        notifyListeners();
-        break;
-      case Error():
-      //TODO: implement LOGGING
-      default:
+      switch (result) {
+        case Ok<void>():
+          _todos.remove(todo);
+          _log.fine("Todo Removido");
+          break;
+        case Error():
+          _log.warning("falha ao remover Todo");
+        default:
+      }
+      return result;
+    } on Exception catch (error, stackStack) {
+      _log.warning("Falha ao deletar todo", error, stackStack);
+      return Result.error(error);
+    } finally {
+      notifyListeners();
     }
-    return result;
   }
 }
