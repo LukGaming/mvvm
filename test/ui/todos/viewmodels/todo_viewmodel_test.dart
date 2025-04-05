@@ -1,15 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_dev.dart';
+import 'package:mvvm/domain/use_cases/todo_update_use_case.dart';
 import 'package:mvvm/ui/todo/viewmodels/todo_viewmodel.dart';
 
 void main() {
   late TodoViewmodel todoViewmodel;
   late TodosRepository todosRepository;
+  late TodoUpdateUseCase todoUpdateUseCase;
 
   setUp(() {
     todosRepository = TodosRepositoryDev();
-    todoViewmodel = TodoViewmodel(todosRepository: todosRepository);
+    todoUpdateUseCase = TodoUpdateUseCase(todosRepository: todosRepository);
+    todoViewmodel = TodoViewmodel(
+      todosRepository: todosRepository,
+      todoUpdateUseCase: todoUpdateUseCase,
+    );
   });
 
   group("Should test TodoViewModel", () {
@@ -20,7 +26,11 @@ void main() {
     test("Should add Todo", () async {
       expect(todoViewmodel.todos, isEmpty);
 
-      await todoViewmodel.addTodo.execute("Novo todo");
+      await todoViewmodel.addTodo.execute((
+        "Novo todo",
+        "Todo description",
+        false,
+      ));
 
       expect(todoViewmodel.todos, isNotEmpty);
 
@@ -32,7 +42,11 @@ void main() {
     test("Should remove Todo", () async {
       expect(todoViewmodel.todos, isEmpty);
 
-      await todoViewmodel.addTodo.execute("Novo todo");
+      await todoViewmodel.addTodo.execute((
+        "Novo todo",
+        "Todo description",
+        false,
+      ));
 
       expect(todoViewmodel.todos, isNotEmpty);
 
