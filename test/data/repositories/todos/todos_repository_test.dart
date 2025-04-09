@@ -53,14 +53,13 @@ void main() {
   test("add()", () async {
     when(() => apiClient.postTodo(
           createTodoMock,
-        )).thenAnswer(
-      (invocation) => Future.value(Result.ok(const Todo(
-        id: "1",
-        name: "Nome",
-        description: "Descrição",
-        done: false,
-      ))),
-    );
+        )).thenAnswer((invocation) => Future.value(Result.ok(addTodoMock)));
+
+    bool wasNotified = false;
+
+    todosRepository.addListener(() {
+      wasNotified = true;
+    });
 
     final result = await todosRepository.add(
       name: "Nome",
@@ -69,5 +68,50 @@ void main() {
     );
 
     expect(result, isA<Ok<Todo>>());
+
+    final createdTodo = result.asOk.value;
+
+    expect(todosRepository.todos.contains(addTodoMock), isTrue);
+
+    expect(createdTodo.id, "1");
+    expect(createdTodo.name, "Nome");
+    expect(createdTodo.description, "Descrição");
+    expect(createdTodo.done, false);
+
+    expect(wasNotified, true);
+  });
+
+  test("delete()", () async {
+    when(() => apiClient.deleteTodo(addTodoMock)).thenAnswer(
+      (invocation) => Future.value(Result.ok(null)),
+    );
+
+    when(
+      () => apiClient.getTodos(),
+    ).thenAnswer(
+      (invocation) => Future.value(
+        Result.ok([addTodoMock]),
+      ),
+    );
+
+    final result = await todosRepository.get();
+
+    expect(result, isA<Ok<List<Todo>>>());
+    expect(todosRepository.todos.contains(addTodoMock), isTrue);
+
+    bool wasNotified = false;
+
+    todosRepository.addListener(() {
+      wasNotified = true;
+    });
+
+    final deleteResult =
+        await todosRepository.delete(todosRepository.todos.first);
+
+    expect(deleteResult, isA<Ok<void>>());
+
+    expect(todosRepository.todos.contains(addTodoMock), isFalse);
+
+    expect(wasNotified, true);
   });
 }

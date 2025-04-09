@@ -10,3 +10,10 @@ const mockGetById = Todo(
 
 const createTodoMock =
     CreateTodoApiModel(name: "Nome", description: "Descrição", done: false);
+
+const addTodoMock = Todo(
+  id: "1",
+  name: "Nome",
+  description: "Descrição",
+  done: false,
+);
