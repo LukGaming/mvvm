@@ -48,70 +48,111 @@ void main() {
 
       verify(() => apiClient.getTodoById(any())).called(1);
     });
-  });
 
-  test("add()", () async {
-    when(() => apiClient.postTodo(
-          createTodoMock,
-        )).thenAnswer((invocation) => Future.value(Result.ok(addTodoMock)));
+    test("delete()", () async {
+      when(() => apiClient.deleteTodo(addTodoMock)).thenAnswer(
+        (invocation) => Future.value(Result.ok(null)),
+      );
 
-    bool wasNotified = false;
+      when(
+        () => apiClient.getTodos(),
+      ).thenAnswer(
+        (invocation) => Future.value(
+          Result.ok([addTodoMock]),
+        ),
+      );
 
-    todosRepository.addListener(() {
-      wasNotified = true;
+      final result = await todosRepository.get();
+
+      expect(result, isA<Ok<List<Todo>>>());
+      expect(todosRepository.todos.contains(addTodoMock), isTrue);
+
+      bool wasNotified = false;
+
+      todosRepository.addListener(() {
+        wasNotified = true;
+      });
+
+      final deleteResult =
+          await todosRepository.delete(todosRepository.todos.first);
+
+      expect(deleteResult, isA<Ok<void>>());
+
+      expect(todosRepository.todos.contains(addTodoMock), isFalse);
+
+      expect(wasNotified, true);
     });
 
-    final result = await todosRepository.add(
-      name: "Nome",
-      description: "Descrição",
-      done: false,
-    );
+    test("add()", () async {
+      when(() => apiClient.postTodo(
+            createTodoMock,
+          )).thenAnswer((invocation) => Future.value(Result.ok(addTodoMock)));
 
-    expect(result, isA<Ok<Todo>>());
+      bool wasNotified = false;
 
-    final createdTodo = result.asOk.value;
+      todosRepository.addListener(() {
+        wasNotified = true;
+      });
 
-    expect(todosRepository.todos.contains(addTodoMock), isTrue);
+      final result = await todosRepository.add(
+        name: "Nome",
+        description: "Descrição",
+        done: false,
+      );
 
-    expect(createdTodo.id, "1");
-    expect(createdTodo.name, "Nome");
-    expect(createdTodo.description, "Descrição");
-    expect(createdTodo.done, false);
+      expect(result, isA<Ok<Todo>>());
 
-    expect(wasNotified, true);
-  });
+      final createdTodo = result.asOk.value;
 
-  test("delete()", () async {
-    when(() => apiClient.deleteTodo(addTodoMock)).thenAnswer(
-      (invocation) => Future.value(Result.ok(null)),
-    );
+      expect(todosRepository.todos.contains(addTodoMock), isTrue);
 
-    when(
-      () => apiClient.getTodos(),
-    ).thenAnswer(
-      (invocation) => Future.value(
-        Result.ok([addTodoMock]),
-      ),
-    );
+      expect(createdTodo.id, "1");
+      expect(createdTodo.name, "Nome");
+      expect(createdTodo.description, "Descrição");
+      expect(createdTodo.done, false);
 
-    final result = await todosRepository.get();
-
-    expect(result, isA<Ok<List<Todo>>>());
-    expect(todosRepository.todos.contains(addTodoMock), isTrue);
-
-    bool wasNotified = false;
-
-    todosRepository.addListener(() {
-      wasNotified = true;
+      expect(wasNotified, true);
     });
 
-    final deleteResult =
-        await todosRepository.delete(todosRepository.todos.first);
+    test("updateTodo()", () async {
+      when(() => apiClient.getTodos()).thenAnswer(
+        (invocation) => Future.value(Result.ok(mockGetTodos)),
+      );
 
-    expect(deleteResult, isA<Ok<void>>());
+      when(() => apiClient.updateTodo(updateTodoMock)).thenAnswer(
+        (invocation) => Future.value(Result.ok(updateTodoMockResponse)),
+      );
 
-    expect(todosRepository.todos.contains(addTodoMock), isFalse);
+      final result = await todosRepository.get();
 
-    expect(wasNotified, true);
+      expect(result, isA<Ok<List<Todo>>>());
+
+      final todos = result.asOk.value;
+
+      bool wasNotified = false;
+
+      todosRepository.addListener(() {
+        wasNotified = true;
+      });
+
+      final updateTodoResult = await todosRepository.updateTodo(
+        todos.first.copyWith(
+          name: "Nome alterado",
+          description: "Descrição alterada",
+          done: true,
+        ),
+      );
+
+      expect(updateTodoResult, isA<Ok<Todo>>());
+      final updatedTodo = updateTodoResult.asOk.value;
+      expect(updatedTodo.id, "1");
+      expect(updatedTodo.name, "Nome alterado");
+      expect(updatedTodo.description, "Descrição alterada");
+      expect(updatedTodo.done, true);
+
+      expect(todosRepository.todos.contains(updatedTodo), isTrue);
+
+      expect(wasNotified, true);
+    });
   });
 }
