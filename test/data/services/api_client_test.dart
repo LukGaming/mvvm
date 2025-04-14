@@ -63,7 +63,10 @@ void main() {
         ),
       );
 
-      expect(result, isA<Result<Todo>>());
+      expect(
+        result,
+        isA<Result<Todo>>(),
+      );
 
       expect(result.asOk.value.done, true);
     });

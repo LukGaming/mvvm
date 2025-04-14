@@ -1,9 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:mvvm/data/repositories/todos/todos_repository.dart';
 import 'package:mvvm/data/repositories/todos/todos_repository_remote.dart';
 import 'package:mvvm/data/services/api/api_client.dart';
-import 'package:mvvm/data/services/api/models/todo/todo_api_model.dart';
 import 'package:mvvm/domain/models/todo.dart';
 import 'package:mvvm/utils/result/result.dart';
 
@@ -151,6 +149,26 @@ void main() {
       expect(updatedTodo.done, true);
 
       expect(todosRepository.todos.contains(updatedTodo), isTrue);
+
+      expect(wasNotified, true);
+    });
+
+    test("get()", () async {
+      when(
+        () => apiClient.getTodos(),
+      ).thenAnswer((invocation) => Future.value(Result.ok(mockGetTodos)));
+
+      bool wasNotified = false;
+      todosRepository.addListener(() {
+        wasNotified = true;
+      });
+      final result = await todosRepository.get();
+
+      expect(result, isA<Ok<List<Todo>>>());
+
+      expect(todosRepository.todos.length, 2);
+
+      expect(todosRepository.todos, equals(mockGetTodos));
 
       expect(wasNotified, true);
     });

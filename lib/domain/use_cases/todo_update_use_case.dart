@@ -13,7 +13,6 @@ class TodoUpdateUseCase {
 
   Future<Result<Todo>> updateTodo(Todo todo) async {
     try {
-      throw Exception("Excessão ao criar todo");
       final result = await _todosRepository.updateTodo(todo);
 
       switch (result) {
