@@ -11,7 +11,9 @@ class TodoUpdateUseCase {
     required TodosRepository todosRepository,
   }) : _todosRepository = todosRepository;
 
-  Future<Result<Todo>> updateTodo(Todo todo) async {
+  Future<Result<Todo>> updateTodo(
+    Todo todo,
+  ) async {
     try {
       final result = await _todosRepository.updateTodo(todo);
 
