@@ -9,9 +9,9 @@ class MockHttpRequest extends Mock implements HttpClientRequest {}
 
 class MockHttpHeaders extends Mock implements HttpHeaders {}
 
-class HttpClientMock extends Mock implements HttpClient {}
+class MockHttpClient extends Mock implements HttpClient {}
 
-extension MockHttpMethods on HttpClientMock {
+extension MockHttpMethods on MockHttpClient {
   void mockGet(String path, Object object) {
     when(() => get(any(), any(), path)).thenAnswer((_) {
       final request = MockHttpRequest();
