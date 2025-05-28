@@ -26,13 +26,9 @@ void main() {
     });
 
     test("Should return a Todo when creating postTodo()", () async {
-      const CreateTodoApiModel todoToCreate = CreateTodoApiModel(
-        name: "Todo created on TEST",
-        description: "Test description",
-        done: false,
-      );
+      mockHttpClient.mockPost("/todos", mockTodoPostResponse);
 
-      final result = await apiClient.postTodo(todoToCreate);
+      final result = await apiClient.postTodo(mockTodoPost);
 
       expect(result.asOk.value, isA<Todo>());
     });

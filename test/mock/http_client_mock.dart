@@ -25,4 +25,17 @@ extension MockHttpMethods on MockHttpClient {
       return Future.value(request);
     });
   }
+
+  void mockPost(String path, Object object) {
+    when(() => post(any(), any(), path)).thenAnswer((_) {
+      final request = MockHttpRequest();
+      final response = MockHttpResponse();
+      when(() => request.close()).thenAnswer((_) => Future.value(response));
+      when(() => request.headers).thenReturn(MockHttpHeaders());
+      when(() => response.statusCode).thenReturn(201);
+      when(() => response.transform(utf8.decoder))
+          .thenAnswer((_) => Stream.value(jsonEncode(object)));
+      return Future.value(request);
+    });
+  }
 }
