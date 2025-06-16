@@ -34,83 +34,42 @@ void main() {
     });
 
     test("Should delete a Todo when deleteTodo()", () async {
-      const CreateTodoApiModel todoToCreate = CreateTodoApiModel(
+      const Todo todo = Todo(
+        id: "1",
         name: "Todo created on TEST",
         description: "Test description",
         done: false,
       );
 
-      final createdTodoResult = await apiClient.postTodo(todoToCreate);
+      mockHttpClient.mockDelete("/todos/1", todo);
 
-      final result = await apiClient.deleteTodo(createdTodoResult.asOk.value);
+      final result = await apiClient.deleteTodo(todo);
 
       expect(result, isA<Result<void>>());
     });
 
     test("Should update a Todo when updateTodo()", () async {
-      const CreateTodoApiModel todoToCreate = CreateTodoApiModel(
-        name: "Todo created on TEST",
+      final updatedDate = DateTime.now().toIso8601String();
+
+      final updatedTodo = Todo(
+        id: "1",
+        name: "updatedDate $updatedDate",
         description: "Test description",
-        done: false,
+        done: true,
       );
 
-      final createdTodoResult = await apiClient.postTodo(todoToCreate);
-
-      final result = await apiClient.updateTodo(
-        UpdateTodoApiModel(
-          id: createdTodoResult.asOk.value.id!,
-          name:
-              "${createdTodoResult.asOk.value.name} updatedDate ${DateTime.now().toIso8601String()}",
-          description: "Test description",
-          done: true,
-        ),
-      );
-
-      expect(
-        result,
-        isA<Result<Todo>>(),
-      );
-
-      expect(result.asOk.value.done, true);
-    });
-
-    test("Should delete a Todo when deleteTodo()", () async {
-      const CreateTodoApiModel todoToCreate = CreateTodoApiModel(
-        name: "Todo created on TEST",
+      final todoToUpdate = UpdateTodoApiModel(
+        id: "1",
+        name: "updatedDate $updatedDate",
         description: "Test description",
-        done: false,
+        done: true,
       );
 
-      final createdTodoResult = await apiClient.postTodo(todoToCreate);
+      mockHttpClient.mockPut("/todos/1", updatedTodo);
 
-      final result = await apiClient.deleteTodo(createdTodoResult.asOk.value);
+      final result = await apiClient.updateTodo(todoToUpdate);
 
-      expect(result, isA<Result<void>>());
-    });
-
-    test("Should update a Todo when updateTodo()", () async {
-      const CreateTodoApiModel todoToCreate = CreateTodoApiModel(
-        name: "Todo created on TEST",
-        description: "Test description",
-        done: false,
-      );
-
-      final createdTodoResult = await apiClient.postTodo(todoToCreate);
-
-      final result = await apiClient.updateTodo(
-        UpdateTodoApiModel(
-          id: createdTodoResult.asOk.value.id!,
-          name:
-              "${createdTodoResult.asOk.value.name} updatedDate ${DateTime.now().toIso8601String()}",
-          description: "Test description",
-          done: true,
-        ),
-      );
-
-      expect(
-        result,
-        isA<Result<Todo>>(),
-      );
+      expect(result, isA<Result<Todo>>());
 
       expect(result.asOk.value.done, true);
     });

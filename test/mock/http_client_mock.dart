@@ -38,4 +38,30 @@ extension MockHttpMethods on MockHttpClient {
       return Future.value(request);
     });
   }
+
+  void mockPut(String path, Object object) {
+    when(() => put(any(), any(), path)).thenAnswer((_) {
+      final request = MockHttpRequest();
+      final response = MockHttpResponse();
+      when(() => request.close()).thenAnswer((_) => Future.value(response));
+      when(() => request.headers).thenReturn(MockHttpHeaders());
+      when(() => response.statusCode).thenReturn(200);
+      when(() => response.transform(utf8.decoder))
+          .thenAnswer((_) => Stream.value(jsonEncode(object)));
+      return Future.value(request);
+    });
+  }
+
+  void mockDelete(String path, Object object) {
+    when(() => delete(any(), any(), path)).thenAnswer((_) {
+      final request = MockHttpRequest();
+      final response = MockHttpResponse();
+      when(() => request.close()).thenAnswer((_) => Future.value(response));
+      when(() => request.headers).thenReturn(MockHttpHeaders());
+      when(() => response.statusCode).thenReturn(200);
+      when(() => response.transform(utf8.decoder))
+          .thenAnswer((_) => Stream.value(jsonEncode(object)));
+      return Future.value(request);
+    });
+  }
 }
